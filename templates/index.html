@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Database</title>
+    <style>
+        body {
+            font-family: Arial;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 40px;
+        }
+        .left, .right {
+            width: 45%;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+        }
+        button {
+            padding: 10px;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .details {
+            margin-top: 20px;
+            background: #f2f2f2;
+            padding: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<h1 style="text-align:center;">Student Database</h1>
+
+<div class="container">
+
+    <!-- LEFT SIDE: INPUT FORM -->
+    <div class="left">
+        <h2>Add Student</h2>
+
+        <form method="POST">
+            <input type="hidden" name="add_student" value="1">
+
+            <label>Name</label>
+            <input type="text" name="studentname" required>
+
+            <label>SAP ID</label>
+            <input type="text" name="sapid" required>
+
+            <label>Gender</label>
+            <select name="gender">
+                <option>Male</option>
+                <option>Female</option>
+            </select>
+
+            <label>Marks</label>
+            <input type="number" step="0.01" name="marks" required>
+
+            <button type="submit">Add Student</button>
+        </form>
+    </div>
+
+
+    <!-- RIGHT SIDE: DROPDOWN + DETAILS -->
+    <div class="right">
+        <h2>View Student</h2>
+
+        <form method="GET">
+            <select name="student_id" onchange="this.form.submit()">
+                <option value="">Select Student</option>
+                {% for student in students %}
+                    <option value="{{ student[0] }}">
+                        {{ student[1] }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+
+        {% if selected_student %}
+        <div class="details">
+            <p><strong>Name:</strong> {{ selected_student[1] }}</p>
+            <p><strong>SAP ID:</strong> {{ selected_student[2] }}</p>
+            <p><strong>Gender:</strong> {{ selected_student[3] }}</p>
+            <p><strong>Marks:</strong> {{ selected_student[4] }}</p>
+        </div>
+        {% endif %}
+    </div>
+
+</div>
+
+</body>
+</html>
